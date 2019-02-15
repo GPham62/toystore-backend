@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const config = require("./config-local.json");
+const cors = require("cors");
 
 const app = express();
 
@@ -10,25 +11,26 @@ const imageRouter = require("./modules/api/images/router");
 const userRouter = require("./modules/api/users/router");
 const authRouter = require("./modules/api/auth/router");
 
-app.use((req, res, next) => {
-  res.setHeader("X-Frame-Options", "ALLOWALL");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "POST, GET, PUT, DELETE, OPTIONS"
-  );
+app.use(cors({origin: true, credentials: true}));
+// app.use((req, res, next) => {
+//   res.setHeader("X-Frame-Options", "ALLOWALL");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "POST, GET, PUT, DELETE, OPTIONS"
+//   );
 
-  if (req.headers.origin) {
-    res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
-  }
+//   if (req.headers.origin) {
+//     res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+//   }
 
-  res.setHeader("Access-Control-Allow-Credentials", true);
+//   res.setHeader("Access-Control-Allow-Credentials", true);
 
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Authorization, Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Authorization, Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
 
 app.use(
   session({
