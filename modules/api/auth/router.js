@@ -3,6 +3,15 @@ const router = express.Router();
 
 const authController = require("./controller");
 
+router.get("/", (req,res) =>{
+  const {userInfo} = req.session;
+  if (userInfo && userInfo.username){
+    res.json(userInfo);
+  } else{
+    res.status(401).json("Not logging in");
+  }
+})
+
 router.post("/", (req, res) => {
   authController
     .login(req.body)
