@@ -5,8 +5,8 @@ const authController = require("./controller");
 
 router.get("/", (req,res) =>{
   const {userInfo} = req.session;
+  console.log(req.session);
   if (userInfo && userInfo.username){
-    console.log(req.session);
     res.json(userInfo);
   } else{
     res.status(401).json("Not logging in");
