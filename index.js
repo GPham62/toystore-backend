@@ -1,54 +1,42 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const session = require("express-session");
 const config = require("./config-local.json");
 const cors = require("cors");
 
 const app = express();
 
-const imageRouter = require("./modules/api/images/router");
+const productRouter = require("./modules/api/products/router");
 const userRouter = require("./modules/api/users/router");
 const authRouter = require("./modules/api/auth/router");
 
 app.use(cors({origin: true, credentials: true}));
-// app.use((req, res, next) => {
-//   res.setHeader("X-Frame-Options", "ALLOWALL");
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "POST, GET, PUT, DELETE, OPTIONS"
-//   );
 
-//   if (req.headers.origin) {
-//     res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
-//   }
+app.use((req, res, next) => {
+  res.setHeader("X-Frame-Options", "ALLOWALL");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "POST, GET, PUT, DELETE, OPTIONS"
+  );
 
-//   res.setHeader("Access-Control-Allow-Credentials", true);
+  if (req.headers.origin) {
+    res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+  }
 
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Authorization, Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
+  res.setHeader("Access-Control-Allow-Credentials", true);
 
-app.use(
-  session({
-    secret: config.sessionSecret,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: config.secureCookie,
-      maxAge: 12 * 60 * 60 * 1000
-    }
-  })
-);
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Authorization, Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ extended: false }));
 
 app.use("/api/auth", authRouter);
-app.use("/api/images", imageRouter);
+app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 
 app.use(express.static('./public'));
@@ -57,7 +45,7 @@ app.get('/', (req,res) => {
   res.sendFile('./public/index.html');
 });
 
-mongoose.connect(config.mongoPath, err => {
+mongoose.connect(config.mongoPath,{ useNewUrlParser: true }, err => {
   if (err) console.error(err);
   else console.log("Database connect successful");
 });

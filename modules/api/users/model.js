@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require("bcryptjs");
 
 const userModel = new Schema(
   {
@@ -18,26 +17,17 @@ const userModel = new Schema(
         message: "{VALUE} is not a valid email address!"
       }
     },
-    avatar: { type: Buffer },
-    contentType: { type: String },
-    active: { type: Boolean, default: true }
+    avatar:{
+      type: String, default: () => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+    },
+    facebookProvider: {
+      type: {
+        id: String,
+        token: String
+      }
+    }
   },
-  { timestamps: { createdAt: "createdAt" } }
+  { timestamps: true }
 );
-
-userModel.pre("save", function(next) {
-  if (!this.isModified("password")) {
-    return next();
-  }
-
-  bcrypt
-    .genSalt(12)
-    .then(salt => bcrypt.hash(this.password, salt))
-    .then(hash => {
-      this.password = hash;
-      next();
-    })
-    .catch(err => next(err));
-});
 
 module.exports = mongoose.model("users", userModel);

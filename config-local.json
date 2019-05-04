@@ -1,5 +1,6 @@
 {
-  "mongoPath": "mongodb://admin:123456789A@ds143330.mlab.com:43330/tk-hotgirls-17",
-  "sessionSecret": "himitsu",
-  "secureCookie": false
+  "mongoPath": "mongodb+srv://admin:admin@cluster0-qev2e.mongodb.net/toy_store?retryWrites=true",
+  "JWT_SECRET_KEY": "...",
+  "FACEBOOK_CLIENT_ID": "325329114822297",
+  "FACEBOOK_CLIENT_SECRET": "15b1003d83d88823b3efbac0c87d91f1"
 }
