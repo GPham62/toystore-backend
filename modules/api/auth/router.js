@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
   res.send("Auth success!")
 })
 
-router.post('/facebook', passport.authenticate('facebook-token', {session: false}), (req, res) => {
+router.post('/facebook/token', passport.authenticate('facebook-token', {session: false}), (req, res) => {
   console.log('Req user: ', req.user)
   if (typeof req.user === 'undefined'){
     res.status(401).send('User not authenticated')

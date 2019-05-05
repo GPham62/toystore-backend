@@ -92,5 +92,6 @@ const getUserByFacebookId = id =>
 
 module.exports = {
   createUser,
-  getOneUser
+  getOneUser,
+  getUserByFacebookId
 };
