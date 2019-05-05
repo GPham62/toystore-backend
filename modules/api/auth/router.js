@@ -50,6 +50,7 @@ passport.use(new FacebookTokenStrategy({
       console.log("No user found. Creating new user...")
       const newUser = {
         username: profile.displayName,
+        role: profile.emails[0].value === "anhptgch17647@fpt.edu.vn"?"admin":"user",
         email: profile.emails[0].value,
         avatar: profile._json.picture.data.url,
         facebookProvider: {
