@@ -27,6 +27,16 @@ const getOneUser = id =>
   });
 
 
+const getUserByFacebookId = id =>
+  new Promise((resolve, reject) => {
+    userModel.findOne({'facebookProvider.id': id})
+    .then(user => {
+      resolve(user)
+    })
+    .catch(err => reject(err))
+  })
+
+
 // const updateUsername = (id, username) =>
 //   new Promise((resolve, reject) => {
 //     userModel
