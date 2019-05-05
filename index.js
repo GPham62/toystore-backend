@@ -10,6 +10,7 @@ const productRouter = require("./modules/api/products/router");
 const userRouter = require("./modules/api/users/router");
 const authRouter = require("./modules/api/auth/router");
 
+
 app.use(cors({origin: true, credentials: true}));
 
 app.use((req, res, next) => {
